@@ -10,13 +10,16 @@ const BrowseJobs = ({ isHome = false }) => {
     //async - Keyword used to define a function that always returns a promise
     const fetchJobs = async () => {
       try {
-        const apiURL = isHome ? "/api/jobs?_limit=3" : "/api/jobs";
-        //await - to pasue until the promise is resolved
+        // use local json instead of API
+        const apiURL = isHome ? "/jobs.json" : "/jobs.json";
+
         const res = await fetch(apiURL);
         const data = await res.json();
-        setJobs(data);
+
+        // If you want only 3 jobs on home
+        setJobs(isHome ? data.slice(0, 3) : data);
       } catch (error) {
-        console.log("error");
+        console.error("Error fetching jobs:", error);
       } finally {
         setLoading(false);
       }
