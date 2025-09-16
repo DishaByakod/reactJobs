@@ -7,13 +7,10 @@ const BrowseJobs = ({ isHome = false }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    //async - Keyword used to define a function that always returns a promise
     const fetchJobs = async () => {
       try {
-        // use local json instead of API
-        const apiURL = isHome ? "/jobs.json" : "/jobs.json";
-
-        const res = await fetch(apiURL);
+        // fetch from public folder
+        const res = await fetch("/jobs.json");
         const data = await res.json();
 
         // If you want only 3 jobs on home
@@ -24,8 +21,10 @@ const BrowseJobs = ({ isHome = false }) => {
         setLoading(false);
       }
     };
+
     fetchJobs();
-  }, []);
+  }, [isHome]);
+
   return (
     <section className="bg-blue-50 px-4 py-10">
       <div className="container-xl lg:container m-auto">
@@ -38,7 +37,6 @@ const BrowseJobs = ({ isHome = false }) => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {jobs.map((job) => (
-              //because it's a list you have to have a key otherwise it gives errors
               <JobCard key={job.id} job={job} />
             ))}
           </div>
