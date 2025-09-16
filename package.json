@@ -1,7 +1,7 @@
 {
-  "homepage": "https://github.com/DishaByakod/reactJobs",
   "name": "jobswebsite",
   "private": true,
+  "homepage": "https://DishaByakod.github.io/reactJobs",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -10,6 +10,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "json-server --watch src/jobs.json --port 5000",
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
