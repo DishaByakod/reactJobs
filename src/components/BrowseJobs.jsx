@@ -9,7 +9,7 @@ const BrowseJobs = ({ isHome = false }) => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await fetch(`${import.meta.env.BASE_URL}jobs.json`);
+        const res = await fetch("./jobs.json");
         const data = await res.json();
 
         // Ensure it's always an array
