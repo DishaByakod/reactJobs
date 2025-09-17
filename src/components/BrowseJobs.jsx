@@ -9,14 +9,16 @@ const BrowseJobs = ({ isHome = false }) => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        // fetch from public folder
-        const res = await fetch("/jobs.json");
+        const res = await fetch(`${import.meta.env.BASE_URL}jobs.json`);
         const data = await res.json();
 
-        // If you want only 3 jobs on home
-        setJobs(isHome ? data.slice(0, 3) : data);
+        // Ensure it's always an array
+        const jobsArray = Array.isArray(data) ? data : data.jobs || [];
+
+        setJobs(isHome ? jobsArray.slice(0, 3) : jobsArray);
       } catch (error) {
         console.error("Error fetching jobs:", error);
+        setJobs([]); // fallback
       } finally {
         setLoading(false);
       }

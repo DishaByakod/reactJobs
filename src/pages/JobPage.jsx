@@ -94,9 +94,21 @@ const JobPage = () => {
 };
 
 const jobLoader = async ({ params }) => {
-  const res = await fetch(`/api/jobs/${params.id}`);
+  // Fetch full jobs.json from the public folder
+  const res = await fetch(`${import.meta.env.BASE_URL}jobs.json`);
   const data = await res.json();
-  return data;
+
+  // Ensure it's an array (same fix as before)
+  const jobsArray = Array.isArray(data) ? data : data.jobs || [];
+
+  // Find the job by id (params.id is a string, so convert)
+  const job = jobsArray.find((j) => String(j.id) === params.id);
+
+  if (!job) {
+    throw new Response("Job Not Found", { status: 404 });
+  }
+
+  return job;
 };
 
 export { JobPage as default, jobLoader };
